@@ -36,3 +36,7 @@ export const US_BANKS = [
 
 export const currency = (n: number) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD" });
+
+export const MIN_TRANSFER_AMOUNT = 5000;
+
+export const MIN_TRANSFER_LABEL = currency(MIN_TRANSFER_AMOUNT);
