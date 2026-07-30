@@ -621,8 +621,13 @@ function MoneyDialog({
             />
           </div>
 
+          {action === "internal" && <ContactWithdrawalTeam />}
+
           {action === "paypal" && (
-            <PinField id="pp-pin" value={pin} onChange={setPin} />
+            <>
+              <PinField id="pp-pin" value={pin} onChange={setPin} />
+              <ContactWithdrawalTeam />
+            </>
           )}
 
           <Button
