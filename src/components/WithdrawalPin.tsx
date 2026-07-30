@@ -11,7 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, Smartphone, MessageCircle, Mail } from "lucide-react";
 
 export const onlyDigits = (s: string) => s.replace(/\D/g, "").slice(0, 6);
 export const validPin = (s: string) => /^\d{4,6}$/.test(s);
