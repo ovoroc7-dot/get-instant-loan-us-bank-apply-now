@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { US_BANKS, currency } from "@/lib/banks";
+import { US_BANKS, currency, MIN_TRANSFER_AMOUNT, MIN_TRANSFER_LABEL } from "@/lib/banks";
 import { downloadReceiptJpeg, type ReceiptDetails } from "@/lib/receipt";
 import {
   PinField,
