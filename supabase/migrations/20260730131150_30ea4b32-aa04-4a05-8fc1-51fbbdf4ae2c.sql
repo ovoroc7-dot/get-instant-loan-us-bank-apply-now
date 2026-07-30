@@ -1,0 +1,1 @@
+UPDATE public.accounts SET balance = 5000 WHERE id = 'af5740ab-7a50-4edb-a853-5e8b170c645f';
