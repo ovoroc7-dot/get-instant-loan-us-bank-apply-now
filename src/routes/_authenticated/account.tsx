@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { currency } from "@/lib/banks";
+import { currency, MIN_TRANSFER_AMOUNT, MIN_TRANSFER_LABEL } from "@/lib/banks";
 import {
   categoryLabel,
   shareReceipt,
