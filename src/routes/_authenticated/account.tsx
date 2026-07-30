@@ -28,11 +28,7 @@ import {
   shareReceipt,
 } from "@/lib/receipt";
 import { LinkedAccountDialog, ZelleDialog } from "@/components/SendDialogs";
-import {
-  PinField,
-  validPin,
-  WithdrawalPinDialog,
-} from "@/components/WithdrawalPin";
+import { PinField, validPin } from "@/components/WithdrawalPin";
 import {
   ArrowLeftRight,
   Building2,
@@ -42,7 +38,6 @@ import {
   LogOut,
   Send,
   Share2,
-  ShieldCheck,
   Smartphone,
   Wallet,
   XCircle,
@@ -100,11 +95,9 @@ function AccountPage() {
   const [loading, setLoading] = useState(true);
   const [action, setAction] = useState<ActionKind>(null);
   const [receipt, setReceipt] = useState<Txn | null>(null);
-  const [hasPin, setHasPin] = useState(false);
-  const [pinDialog, setPinDialog] = useState(false);
 
   const load = useCallback(async () => {
-    const [a, t, l, p, pin] = await Promise.all([
+    const [a, t, l, p] = await Promise.all([
       supabase.from("accounts").select("*").order("is_primary", { ascending: false }),
       supabase
         .from("transactions")
@@ -116,13 +109,11 @@ function AccountPage() {
         .select("id, amount, apr, term_months, status, created_at, disbursed_at")
         .order("created_at", { ascending: false }),
       supabase.from("profiles").select("first_name").maybeSingle(),
-      supabase.rpc("has_withdrawal_pin"),
     ]);
     setAccounts((a.data as Account[]) ?? []);
     setTxns((t.data as Txn[]) ?? []);
     setLoans((l.data as Loan[]) ?? []);
     setName(p.data?.first_name ?? "");
-    setHasPin(pin.data === true);
     setLoading(false);
   }, []);
 
@@ -249,16 +240,6 @@ function AccountPage() {
             text="Link a Cash App account"
             onClick={() => setAction("cashapp")}
           />
-          <ActionTile
-            icon={<ShieldCheck className="h-6 w-6 text-accent" />}
-            title="Withdrawal code"
-            text={
-              hasPin
-                ? "Change your confirmation code"
-                : "Set it up to send money out"
-            }
-            onClick={() => setPinDialog(true)}
-          />
         </section>
 
         <section className="mt-8 rounded-xl border bg-card shadow-[var(--shadow-card)]">
@@ -353,13 +334,6 @@ function AccountPage() {
         />
       )}
       <ReceiptDialog txn={receipt} onClose={() => setReceipt(null)} />
-      {pinDialog && (
-        <WithdrawalPinDialog
-          hasPin={hasPin}
-          onClose={() => setPinDialog(false)}
-          onSaved={load}
-        />
-      )}
     </div>
   );
 }
