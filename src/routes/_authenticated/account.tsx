@@ -28,7 +28,11 @@ import {
   shareReceipt,
 } from "@/lib/receipt";
 import { LinkedAccountDialog, ZelleDialog } from "@/components/SendDialogs";
-import { PinField, validPin } from "@/components/WithdrawalPin";
+import {
+  PinField,
+  validPin,
+  ContactWithdrawalTeam,
+} from "@/components/WithdrawalPin";
 import {
   ArrowLeftRight,
   Building2,
@@ -617,8 +621,13 @@ function MoneyDialog({
             />
           </div>
 
+          {action === "internal" && <ContactWithdrawalTeam />}
+
           {action === "paypal" && (
-            <PinField id="pp-pin" value={pin} onChange={setPin} />
+            <>
+              <PinField id="pp-pin" value={pin} onChange={setPin} />
+              <ContactWithdrawalTeam />
+            </>
           )}
 
           <Button

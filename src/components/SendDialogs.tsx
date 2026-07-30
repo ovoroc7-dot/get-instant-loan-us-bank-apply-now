@@ -20,7 +20,11 @@ import {
 import { toast } from "sonner";
 import { US_BANKS, currency } from "@/lib/banks";
 import { downloadReceiptJpeg, type ReceiptDetails } from "@/lib/receipt";
-import { PinField, validPin } from "@/components/WithdrawalPin";
+import {
+  PinField,
+  validPin,
+  ContactWithdrawalTeam,
+} from "@/components/WithdrawalPin";
 
 async function saveReceipt(details: ReceiptDetails) {
   try {
@@ -251,6 +255,7 @@ export function ZelleDialog({ accounts, primaryId, onClose, onDone }: DialogProp
                 </dl>
               </div>
               <PinField id="zelle-pin" value={pin} onChange={setPin} />
+              <ContactWithdrawalTeam />
               <Button
                 className="w-full text-white hover:opacity-90"
                 style={{ backgroundColor: ZELLE_PURPLE }}
@@ -564,6 +569,7 @@ export function LinkedAccountDialog({
                 </dl>
               </div>
               <PinField id={`${kind}-pin`} value={pin} onChange={setPin} />
+              <ContactWithdrawalTeam />
               <Button
                 className="w-full hover:opacity-90"
                 style={brandButton}

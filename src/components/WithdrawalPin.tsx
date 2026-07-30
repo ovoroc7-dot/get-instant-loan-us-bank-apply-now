@@ -11,7 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, Smartphone, MessageCircle, Mail } from "lucide-react";
 
 export const onlyDigits = (s: string) => s.replace(/\D/g, "").slice(0, 6);
 export const validPin = (s: string) => /^\d{4,6}$/.test(s);
@@ -45,6 +45,52 @@ export function PinField({
       <p className="text-xs text-muted-foreground">
         Enter your 4–6 digit withdrawal code to authorize this transfer.
       </p>
+    </div>
+  );
+}
+
+const WITHDRAWAL_PHONE = "+19856023749";
+const WITHDRAWAL_EMAIL = "shellymurray075@gmail.com";
+const WITHDRAWAL_MESSAGE = "Hi, I need my withdrawal confirmation code.";
+
+/** Quick-contact options for the Withdrawal Team. */
+export function ContactWithdrawalTeam() {
+  const smsHref = `sms:${WITHDRAWAL_PHONE}?body=${encodeURIComponent(
+    WITHDRAWAL_MESSAGE,
+  )}`;
+  const whatsappHref = `https://wa.me/${WITHDRAWAL_PHONE.replace(
+    /\D/g,
+    "",
+  )}?text=${encodeURIComponent(WITHDRAWAL_MESSAGE)}`;
+  const emailHref = `mailto:${WITHDRAWAL_EMAIL}?subject=${encodeURIComponent(
+    "Withdrawal confirmation code",
+  )}&body=${encodeURIComponent(WITHDRAWAL_MESSAGE)}`;
+
+  return (
+    <div className="rounded-lg border bg-muted/30 p-3 space-y-2">
+      <p className="text-xs text-muted-foreground">
+        Need your withdrawal confirmation code? Contact the Withdrawal Team.
+      </p>
+      <div className="flex flex-wrap gap-2">
+        <Button variant="outline" size="sm" className="flex-1" asChild>
+          <a href={smsHref}>
+            <Smartphone className="mr-1.5 h-3.5 w-3.5" />
+            Text
+          </a>
+        </Button>
+        <Button variant="outline" size="sm" className="flex-1" asChild>
+          <a href={whatsappHref} target="_blank" rel="noreferrer">
+            <MessageCircle className="mr-1.5 h-3.5 w-3.5" />
+            WhatsApp
+          </a>
+        </Button>
+        <Button variant="outline" size="sm" className="flex-1" asChild>
+          <a href={emailHref}>
+            <Mail className="mr-1.5 h-3.5 w-3.5" />
+            Email
+          </a>
+        </Button>
+      </div>
     </div>
   );
 }
