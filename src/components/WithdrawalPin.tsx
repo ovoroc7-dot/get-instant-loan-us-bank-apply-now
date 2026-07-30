@@ -70,10 +70,10 @@ export function WithdrawalPinDialog({
   async function save(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
-    const { error } = await supabase.rpc("set_withdrawal_pin", {
-      _pin: pin,
-      _current_pin: hasPin ? current : null,
-    });
+    const { error } = await supabase.rpc(
+      "set_withdrawal_pin",
+      hasPin ? { _pin: pin, _current_pin: current } : { _pin: pin },
+    );
     setBusy(false);
     if (error) {
       toast.error("Could not save your code", { description: error.message });
