@@ -79,9 +79,7 @@ function AuthPage() {
           onSubmit={onSubmit}
           className="w-full rounded-xl border bg-card p-6 shadow-[var(--shadow-card)]"
         >
-        <h1 className="text-2xl font-bold text-foreground">
-          {mode === "signup" ? "Create your account" : "Sign in"}
-        </h1>
+        <h1 className="text-2xl font-bold text-foreground">Sign in</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Stay signed in on any device — your session is remembered.
           </p>
@@ -112,25 +110,8 @@ function AuthPage() {
           </div>
 
           <Button type="submit" className="mt-6 w-full" disabled={busy}>
-            {busy
-              ? "Please wait…"
-              : mode === "signup"
-                ? "Create account"
-                : "Sign in"}
+            {busy ? "Please wait…" : "Sign in"}
           </Button>
-
-          <p className="mt-4 text-center text-sm text-muted-foreground">
-            {mode === "signup"
-              ? "Already registered? "
-              : "Don't have an account yet? "}
-            <button
-              type="button"
-              className="font-medium text-primary hover:underline"
-              onClick={() => setMode(mode === "signup" ? "signin" : "signup")}
-            >
-              {mode === "signup" ? "Sign in" : "Create one"}
-            </button>
-          </p>
 
           <p className="mt-4 text-center text-sm text-muted-foreground">
             No account yet?{" "}
