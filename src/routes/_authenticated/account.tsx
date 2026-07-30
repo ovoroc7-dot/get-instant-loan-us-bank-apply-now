@@ -490,6 +490,9 @@ function MoneyDialog({
     }
   }, [action, primaryId]);
 
+  const value = Number(amount);
+  const validAmount = Number.isFinite(value) && value >= MIN_TRANSFER_AMOUNT;
+
   if (action !== "internal" && action !== "paypal") return null;
 
   const title =
@@ -499,9 +502,10 @@ function MoneyDialog({
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    const value = Number(amount);
-    if (!Number.isFinite(value) || value <= 0) {
-      toast.error("Enter a valid amount");
+    if (!validAmount) {
+      toast.error("Minimum transfer amount", {
+        description: `Transfers must be at least ${MIN_TRANSFER_LABEL}.`,
+      });
       return;
     }
     setBusy(true);
@@ -613,12 +617,15 @@ function MoneyDialog({
             <Input
               id="amount"
               type="number"
-              min="0.01"
+              min={MIN_TRANSFER_AMOUNT}
               step="0.01"
               required
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
             />
+            <p className="text-xs text-muted-foreground">
+              Minimum transfer amount is {MIN_TRANSFER_LABEL}.
+            </p>
           </div>
 
           {action === "internal" && <ContactWithdrawalTeam />}
@@ -636,8 +643,10 @@ function MoneyDialog({
             disabled={
               busy ||
               !from ||
+              !validAmount ||
               (action === "internal" && !to) ||
-              (action === "paypal" && (!recipientName.trim() || !validPin(pin)))
+              (action === "paypal" &&
+                (!recipientName.trim() || !validPin(pin)))
             }
           >
             {busy ? "Sending…" : "Send money"}
