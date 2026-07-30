@@ -249,6 +249,16 @@ function AccountPage() {
             text="Link a Cash App account"
             onClick={() => setAction("cashapp")}
           />
+          <ActionTile
+            icon={<ShieldCheck className="h-6 w-6 text-accent" />}
+            title="Withdrawal code"
+            text={
+              hasPin
+                ? "Change your confirmation code"
+                : "Set it up to send money out"
+            }
+            onClick={() => setPinDialog(true)}
+          />
         </section>
 
         <section className="mt-8 rounded-xl border bg-card shadow-[var(--shadow-card)]">
@@ -343,6 +353,13 @@ function AccountPage() {
         />
       )}
       <ReceiptDialog txn={receipt} onClose={() => setReceipt(null)} />
+      {pinDialog && (
+        <WithdrawalPinDialog
+          hasPin={hasPin}
+          onClose={() => setPinDialog(false)}
+          onSaved={load}
+        />
+      )}
     </div>
   );
 }
