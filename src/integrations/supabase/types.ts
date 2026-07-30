@@ -229,6 +229,24 @@ export type Database = {
         }
         Relationships: []
       }
+      withdrawal_pins: {
+        Row: {
+          pin_hash: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          pin_hash: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          pin_hash?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -245,13 +263,19 @@ export type Database = {
         }
         Returns: boolean
       }
+      has_withdrawal_pin: { Args: never; Returns: boolean }
       send_money: {
         Args: {
           _amount: number
           _category: string
           _from: string
+          _pin: string
           _recipient: string
         }
+        Returns: undefined
+      }
+      set_withdrawal_pin: {
+        Args: { _current_pin?: string; _pin: string }
         Returns: undefined
       }
       transfer_between_accounts: {
