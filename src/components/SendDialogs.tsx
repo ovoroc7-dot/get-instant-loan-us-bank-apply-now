@@ -113,7 +113,7 @@ export function ZelleDialog({ accounts, primaryId, onClose, onDone }: DialogProp
   const [pin, setPin] = useState("");
 
   const value = Number(amount);
-  const validAmount = Number.isFinite(value) && value > 0;
+  const validAmount = Number.isFinite(value) && value >= MIN_TRANSFER_AMOUNT;
   const source = accounts.find((a) => a.id === from);
   const canReview = !!from && validAmount && !!name.trim() && !!contact.trim();
 
@@ -206,12 +206,15 @@ export function ZelleDialog({ accounts, primaryId, onClose, onDone }: DialogProp
                 <Input
                   id="zelle-amount"
                   type="number"
-                  min="0.01"
+                  min={MIN_TRANSFER_AMOUNT}
                   step="0.01"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="0.00"
                 />
+                <p className="text-xs text-muted-foreground">
+                  Minimum transfer amount is {MIN_TRANSFER_LABEL}.
+                </p>
               </div>
               <FromAccountField
                 accounts={accounts}
@@ -351,7 +354,7 @@ export function LinkedAccountDialog({
   const [pin, setPin] = useState("");
 
   const value = Number(amount);
-  const validAmount = Number.isFinite(value) && value > 0;
+  const validAmount = Number.isFinite(value) && value >= MIN_TRANSFER_AMOUNT;
   const source = accounts.find((a) => a.id === from);
 
   const routingDigits = digits(routing);
@@ -517,12 +520,15 @@ export function LinkedAccountDialog({
                 <Input
                   id={`${kind}-amount`}
                   type="number"
-                  min="0.01"
+                  min={MIN_TRANSFER_AMOUNT}
                   step="0.01"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="0.00"
                 />
+                <p className="text-xs text-muted-foreground">
+                  Minimum transfer amount is {MIN_TRANSFER_LABEL}.
+                </p>
               </div>
 
               <FromAccountField
