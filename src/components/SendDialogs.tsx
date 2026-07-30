@@ -20,7 +20,11 @@ import {
 import { toast } from "sonner";
 import { US_BANKS, currency } from "@/lib/banks";
 import { downloadReceiptJpeg, type ReceiptDetails } from "@/lib/receipt";
-import { PinField, validPin } from "@/components/WithdrawalPin";
+import {
+  PinField,
+  validPin,
+  ContactWithdrawalTeam,
+} from "@/components/WithdrawalPin";
 
 async function saveReceipt(details: ReceiptDetails) {
   try {
