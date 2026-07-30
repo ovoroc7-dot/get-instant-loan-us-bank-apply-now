@@ -20,6 +20,7 @@ import {
 import { toast } from "sonner";
 import { US_BANKS, currency } from "@/lib/banks";
 import { downloadReceiptJpeg, type ReceiptDetails } from "@/lib/receipt";
+import { PinField, validPin } from "@/components/WithdrawalPin";
 
 async function saveReceipt(details: ReceiptDetails) {
   try {
@@ -105,6 +106,7 @@ export function ZelleDialog({ accounts, primaryId, onClose, onDone }: DialogProp
   const [contact, setContact] = useState("");
   const [amount, setAmount] = useState("");
   const [busy, setBusy] = useState(false);
+  const [pin, setPin] = useState("");
 
   const value = Number(amount);
   const validAmount = Number.isFinite(value) && value > 0;
@@ -118,6 +120,7 @@ export function ZelleDialog({ accounts, primaryId, onClose, onDone }: DialogProp
       _amount: value,
       _category: "zelle",
       _recipient: `${name.trim()} (${contact.trim()})`,
+      _pin: pin,
     });
     setBusy(false);
     if (error) {
@@ -247,10 +250,11 @@ export function ZelleDialog({ accounts, primaryId, onClose, onDone }: DialogProp
                   <ReviewRow k="Delivery" v="Typically within minutes" />
                 </dl>
               </div>
+              <PinField id="zelle-pin" value={pin} onChange={setPin} />
               <Button
                 className="w-full text-white hover:opacity-90"
                 style={{ backgroundColor: ZELLE_PURPLE }}
-                disabled={busy}
+                disabled={busy || !validPin(pin)}
                 onClick={send}
               >
                 {busy ? "Sending…" : `Send ${currency(value)}`}
@@ -339,6 +343,7 @@ export function LinkedAccountDialog({
   const [accountName, setAccountName] = useState("");
   const [amount, setAmount] = useState("");
   const [busy, setBusy] = useState(false);
+  const [pin, setPin] = useState("");
 
   const value = Number(amount);
   const validAmount = Number.isFinite(value) && value > 0;
@@ -367,6 +372,7 @@ export function LinkedAccountDialog({
       _amount: value,
       _category: brand.category,
       _recipient: recipient,
+      _pin: pin,
     });
     setBusy(false);
     if (error) {
@@ -557,10 +563,11 @@ export function LinkedAccountDialog({
                   <ReviewRow k="Delivery" v={brand.delivery} />
                 </dl>
               </div>
+              <PinField id={`${kind}-pin`} value={pin} onChange={setPin} />
               <Button
                 className="w-full hover:opacity-90"
                 style={brandButton}
-                disabled={busy}
+                disabled={busy || !validPin(pin)}
                 onClick={send}
               >
                 {busy ? "Sending…" : `Send ${currency(value)}`}
