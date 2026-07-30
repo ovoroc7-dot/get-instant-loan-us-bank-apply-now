@@ -35,7 +35,6 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -46,20 +45,6 @@ function AuthPage() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
-    if (mode === "signup") {
-      const { error: signUpError } = await supabase.auth.signUp({
-        email: email.trim(),
-        password,
-        options: { emailRedirectTo: window.location.origin },
-      });
-      if (signUpError && !/already/i.test(signUpError.message)) {
-        setBusy(false);
-        toast.error("Could not create account", {
-          description: signUpError.message,
-        });
-        return;
-      }
-    }
     const { error } = await supabase.auth.signInWithPassword({
       email: email.trim(),
       password,
