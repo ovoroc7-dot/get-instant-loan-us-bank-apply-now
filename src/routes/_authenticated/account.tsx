@@ -499,6 +499,7 @@ function MoneyDialog({
   const [recipientName, setRecipientName] = useState("");
   const [amount, setAmount] = useState("");
   const [busy, setBusy] = useState(false);
+  const [pin, setPin] = useState("");
 
   useEffect(() => {
     if (action) {
@@ -507,6 +508,7 @@ function MoneyDialog({
       setRecipient("");
       setRecipientName("");
       setAmount("");
+      setPin("");
     }
   }, [action, primaryId]);
 
@@ -539,6 +541,7 @@ function MoneyDialog({
         _amount: value,
         _category: "paypal",
         _recipient: `${recipientName} (${recipient})`,
+        _pin: pin,
       }));
     }
 
@@ -640,6 +643,10 @@ function MoneyDialog({
             />
           </div>
 
+          {action === "paypal" && (
+            <PinField id="pp-pin" value={pin} onChange={setPin} />
+          )}
+
           <Button
             type="submit"
             className="w-full"
@@ -647,7 +654,7 @@ function MoneyDialog({
               busy ||
               !from ||
               (action === "internal" && !to) ||
-              (action === "paypal" && !recipientName.trim())
+              (action === "paypal" && (!recipientName.trim() || !validPin(pin)))
             }
           >
             {busy ? "Sending…" : "Send money"}
