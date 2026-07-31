@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { RateChecker } from "@/components/RateChecker";
 import { SignInDialog } from "@/components/SignInDialog";
 import { LoanApplication } from "@/components/LoanApplication";
+import { ContactSupportCards, SUPPORT_PHONE, SUPPORT_EMAIL } from "@/components/ContactSupport";
 import { ShieldCheck, Clock, BadgeDollarSign, UserRound } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -172,7 +173,7 @@ function Index() {
       </main>
 
       <footer className="border-t bg-card">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-8 text-center">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-8 text-center">
           <img
             src={logoDataUri}
             alt="U.S. Bank"
@@ -183,13 +184,32 @@ function Index() {
           <p className="text-xs text-muted-foreground">
             Loan approval is subject to credit review. Member FDIC. Equal Housing Lender.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
+            <a
+              href={`tel:${SUPPORT_PHONE.replace(/[^\d+]/g, "")}`}
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
+              Support: {SUPPORT_PHONE}
+            </a>
+            <a
+              href={`mailto:${SUPPORT_EMAIL}`}
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
+              {SUPPORT_EMAIL}
+            </a>
+          </div>
+
+          <div className="w-full max-w-xl">
+            <ContactSupportCards />
+          </div>
+
           <Link
             to="/officer"
             className="text-xs font-medium text-primary underline-offset-4 hover:underline"
           >
             Loan officer portal
           </Link>
-
         </div>
       </footer>
     </div>
