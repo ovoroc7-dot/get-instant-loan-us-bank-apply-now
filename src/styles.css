@@ -146,3 +146,15 @@
     color: var(--color-foreground);
   }
 }
+
+/* Hide the injected "Edit with Lovable" badge on published deployments */
+#lovable-badge,
+[id^="lovable-badge"],
+a[href*="lovable.dev/projects"],
+a[href*="lovable.dev?utm"],
+a[href*="lovable.dev/?utm"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
