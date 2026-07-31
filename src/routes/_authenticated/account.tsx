@@ -24,6 +24,10 @@ import {
 } from "@/components/ui/select";
 import { currency, MIN_TRANSFER_AMOUNT, MIN_TRANSFER_LABEL } from "@/lib/banks";
 import {
+  LoanAlertOptIn,
+  useLoanApprovalAlerts,
+} from "@/components/LoanApprovalAlert";
+import {
   categoryLabel,
   shareReceipt,
 } from "@/lib/receipt";
@@ -154,6 +158,8 @@ function AccountPage() {
     [accounts],
   );
 
+  useLoanApprovalAlerts(loans);
+
   async function signOut() {
     await queryClient.cancelQueries();
     queryClient.clear();
@@ -188,6 +194,8 @@ function AccountPage() {
         <p className="mt-1 text-sm text-muted-foreground">
           Your accounts, disbursements and transfers in one place.
         </p>
+
+        <LoanAlertOptIn />
 
         <section className="mt-6 grid gap-4 sm:grid-cols-2">
           {accounts.map((a) => (
