@@ -37,6 +37,7 @@ import {
   validPin,
   ContactWithdrawalTeam,
 } from "@/components/WithdrawalPin";
+import { ContactSupport } from "@/components/ContactSupport";
 import {
   ArrowLeftRight,
   Building2,
@@ -317,7 +318,13 @@ function AccountPage() {
               </p>
             )}
           </div>
+        </section>
 
+        <section className="mt-8 rounded-xl border bg-card p-5 shadow-[var(--shadow-card)]">
+          <h2 className="mb-4 text-lg font-semibold text-foreground">
+            Contact Support
+          </h2>
+          <ContactSupport />
         </section>
       </main>
 
